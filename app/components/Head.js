@@ -7,6 +7,7 @@ import { FiCopy, FiExternalLink, FiShield } from "react-icons/fi";
 import { HiOutlineStatusOnline } from "react-icons/hi";
 import { ABI } from "@/components/Data";
 import { AddressContext } from "@/context/AddressContext";
+import Link from "next/link";
 
 export default function Head() {
     const [account, setAccount] = useState("");
@@ -171,7 +172,7 @@ export default function Head() {
 
                     <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
 
-                        <button
+                        <Link href={'/admin'}
                             className="
                                 flex items-center justify-center gap-2
                                 rounded-xl border border-white/10
@@ -186,7 +187,7 @@ export default function Head() {
                         >
                             <FiShield size={17} />
                             Admin
-                        </button>
+                        </Link>
 
                         <button
                             onClick={connectWallet}

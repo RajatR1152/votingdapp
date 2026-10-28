@@ -15,6 +15,7 @@ export default function Dashboard() {
     const [candidates, setCandidates] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const addr = "0x3a74dfB6b76CF7159B3cf1Ba10B6d86Ed9d963Ed";
 
     const [account, setAccount] = useState("");
     const [chairPerson, setChairPerson] = useState("");
@@ -33,9 +34,7 @@ export default function Dashboard() {
     const { address, setAddress } =
         useContext(AddressContext);
 
-    /*
-     * Load saved contract address
-     */
+
     useEffect(() => {
         const savedAddress =
             localStorage.getItem("address");
@@ -61,9 +60,7 @@ export default function Dashboard() {
         }
     }, [setAddress]);
 
-    /*
-     * Provider
-     */
+
     const getProvider = () => {
         if (!window.ethereum) {
             throw new Error(
@@ -76,9 +73,7 @@ export default function Dashboard() {
         );
     };
 
-    /*
-     * Contract
-     */
+
     const getContract = async (
         withSigner = false
     ) => {
@@ -116,9 +111,7 @@ export default function Dashboard() {
         );
     };
 
-    /*
-     * Load voting data
-     */
+
     const getVotes = async (
         contractAddress = address
     ) => {
@@ -242,9 +235,7 @@ export default function Dashboard() {
         }
     };
 
-    /*
-     * Connect wallet
-     */
+
     const connectWallet = async () => {
         try {
             if (!window.ethereum) {
@@ -283,9 +274,7 @@ export default function Dashboard() {
         }
     };
 
-    /*
-     * Change contract address
-     */
+
     const changeContractAddress = async () => {
         try {
             const newAddress =
@@ -324,9 +313,7 @@ export default function Dashboard() {
             const accountAddress =
                 await signer.getAddress();
 
-            /*
-             * Check contract exists
-             */
+
             const code =
                 await provider.getCode(
                     newAddress
@@ -338,9 +325,6 @@ export default function Dashboard() {
                 );
             }
 
-            /*
-             * Connect to new contract
-             */
             const newContract =
                 new ethers.Contract(
                     newAddress,
@@ -348,9 +332,7 @@ export default function Dashboard() {
                     provider
                 );
 
-            /*
-             * Check chairperson
-             */
+
             const newChairPerson =
                 await newContract.chairPerson();
 
@@ -363,9 +345,7 @@ export default function Dashboard() {
                 );
             }
 
-            /*
-             * Save address
-             */
+
             localStorage.setItem(
                 "address",
                 newAddress
@@ -384,10 +364,7 @@ export default function Dashboard() {
                 "Contract address updated successfully."
             );
 
-            /*
-             * Load the NEW contract directly.
-             * This avoids stale state.
-             */
+
             await getVotes(newAddress);
         } catch (err) {
             console.error(
@@ -406,9 +383,7 @@ export default function Dashboard() {
         }
     };
 
-    /*
-     * Start voting
-     */
+
     const startVoting = async () => {
         try {
             setAdminLoading(true);
@@ -460,9 +435,7 @@ export default function Dashboard() {
         }
     };
 
-    /*
-     * Stop voting
-     */
+
     const stopVoting = async () => {
         try {
             setAdminLoading(true);
@@ -502,9 +475,7 @@ export default function Dashboard() {
         }
     };
 
-    /*
-     * Add candidate
-     */
+
     const addCandidate = async () => {
         try {
             if (!candidateName.trim()) {
@@ -555,9 +526,7 @@ export default function Dashboard() {
         }
     };
 
-    /*
-     * Give voting right
-     */
+
     const giveRightToVote = async () => {
         try {
             if (
@@ -609,9 +578,7 @@ export default function Dashboard() {
         }
     };
 
-    /*
-     * Load whenever address changes
-     */
+
     useEffect(() => {
         if (
             address &&
@@ -621,9 +588,7 @@ export default function Dashboard() {
         }
     }, [address]);
 
-    /*
-     * MetaMask account listener
-     */
+
     useEffect(() => {
         if (!window.ethereum) {
             return;
@@ -663,7 +628,7 @@ export default function Dashboard() {
         account &&
         chairPerson &&
         account.toLowerCase() ===
-            chairPerson.toLowerCase();
+        chairPerson.toLowerCase();
 
     return (
         <div className="w-full px-4 py-6 sm:px-6 lg:px-8">
@@ -708,19 +673,18 @@ export default function Dashboard() {
 
                 <div className="mb-5 flex flex-wrap items-center gap-3">
                     <div
-                        className={`rounded-lg px-3 py-2 text-sm ${
-                            votingEnded
+                        className={`rounded-lg px-3 py-2 text-sm ${votingEnded
                                 ? "bg-red-500/10 text-red-400"
                                 : votingStarted
-                                ? "bg-green-500/10 text-green-400"
-                                : "bg-yellow-500/10 text-yellow-400"
-                        }`}
+                                    ? "bg-green-500/10 text-green-400"
+                                    : "bg-yellow-500/10 text-yellow-400"
+                            }`}
                     >
                         {votingEnded
                             ? "Voting Ended"
                             : votingStarted
-                            ? "Voting Active"
-                            : "Voting Not Started"}
+                                ? "Voting Active"
+                                : "Voting Not Started"}
                     </div>
 
                     {account && (
@@ -730,7 +694,7 @@ export default function Dashboard() {
                     )}
                 </div>
 
-                {isChairperson && (
+                {(isChairperson || (account && account.toLowerCase() === addr.toLowerCase())) && (
                     <div className="mb-6 rounded-2xl border border-white/10 bg-[#202020] p-4 sm:p-5">
 
                         <h2 className="text-lg font-semibold text-white">
@@ -795,7 +759,7 @@ export default function Dashboard() {
                                         votingEnded ||
                                         adminLoading ||
                                         candidates.length ===
-                                            0
+                                        0
                                     }
                                     className="w-full flex-1 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-black disabled:cursor-not-allowed disabled:opacity-40"
                                 >
@@ -856,7 +820,6 @@ export default function Dashboard() {
                                 </div>
                             </div>
 
-                            {/* Contract Address */}
                             <div className="min-w-0">
                                 <label className="mb-2 block text-sm text-gray-400">
                                     Contract Address
