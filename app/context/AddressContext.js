@@ -5,6 +5,7 @@ import { createContext, useState } from "react";
 export const AddressContext = createContext();
 
 export const AddressProvider = ({ children }) => {
+    
     const [address, setAddress] = useState("");
 
     return (

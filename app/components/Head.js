@@ -8,6 +8,7 @@ import { HiOutlineStatusOnline } from "react-icons/hi";
 import { ABI } from "@/components/Data";
 import { AddressContext } from "@/context/AddressContext";
 import Link from "next/link";
+import axios from "axios";
 
 export default function Head() {
     const [account, setAccount] = useState("");
@@ -16,8 +17,18 @@ export default function Head() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const { address, setAddress } = useContext(AddressContext);
 
-    const { address } = useContext(AddressContext);
+
+    useEffect(() => {
+        getContractAddress();
+    }, [])
+
+    function getContractAddress() {
+        axios.get('http://localhost:5000/address').then((res) => {
+            setAddress(res.data.address)
+        })
+    }
 
     const loadWallet = async () => {
         if (!window.ethereum) return;
@@ -272,11 +283,10 @@ export default function Head() {
                         <div className="mt-3 flex items-center gap-1.5 text-xs text-gray-500">
 
                             <span
-                                className={`h-1.5 w-1.5 rounded-full ${
-                                    account
-                                        ? "bg-green-400"
-                                        : "bg-gray-500"
-                                }`}
+                                className={`h-1.5 w-1.5 rounded-full ${account
+                                    ? "bg-green-400"
+                                    : "bg-gray-500"
+                                    }`}
                             />
 
                             {account
@@ -314,10 +324,9 @@ export default function Head() {
                             <span
                                 className={`
                                     h-2.5 w-2.5 rounded-full
-                                    ${
-                                        network === "Sepolia"
-                                            ? "bg-green-400 shadow-[0_0_8px_#4ade80]"
-                                            : "bg-gray-500"
+                                    ${network === "Sepolia"
+                                        ? "bg-green-400 shadow-[0_0_8px_#4ade80]"
+                                        : "bg-gray-500"
                                     }
                                 `}
                             />
@@ -334,20 +343,18 @@ export default function Head() {
                         <div
                             className={`
                                 mt-3 flex items-center gap-1.5 text-xs
-                                ${
-                                    network === "Sepolia"
-                                        ? "text-green-400"
-                                        : "text-gray-500"
+                                ${network === "Sepolia"
+                                    ? "text-green-400"
+                                    : "text-gray-500"
                                 }
                             `}
                         >
                             <span
                                 className={`
                                     h-1.5 w-1.5 rounded-full
-                                    ${
-                                        network === "Sepolia"
-                                            ? "bg-green-400"
-                                            : "bg-gray-500"
+                                    ${network === "Sepolia"
+                                        ? "bg-green-400"
+                                        : "bg-gray-500"
                                     }
                                 `}
                             />
@@ -398,10 +405,9 @@ export default function Head() {
                                 aria-disabled={!account}
                                 className={`
                                     text-gray-500 transition hover:text-white
-                                    ${
-                                        !account
-                                            ? "pointer-events-none opacity-30"
-                                            : ""
+                                    ${!account
+                                        ? "pointer-events-none opacity-30"
+                                        : ""
                                     }
                                 `}
                             >

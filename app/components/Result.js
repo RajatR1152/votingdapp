@@ -272,16 +272,19 @@ export default function Result() {
 
                 {candidates.length ===
                     0 && (
-                    <div className="rounded-2xl border border-white/10 bg-[#202020] p-8 text-center text-gray-400">
-                        No candidates found.
-                    </div>
-                )}
+                        <div className="rounded-2xl border border-white/10 bg-[#202020] p-8 text-center text-gray-400">
+                            No candidates found.
+                        </div>
+                    )}
+
+                <h1>address:{address}</h1>
 
                 <button
                     onClick={loadResults}
                     className="rounded-xl bg-white px-5 py-3 font-semibold text-black transition hover:bg-gray-200"
                 >
                     Refresh Results
+
                 </button>
             </div>
         </div>
