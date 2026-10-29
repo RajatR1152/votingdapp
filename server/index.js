@@ -31,7 +31,6 @@ app.post("/update", async (req, res) => {
             });
         }
 
-        // Update the latest address in the database
         const savedAddress = await Address.findOneAndUpdate(
             {},
             { addr: newaddress },
@@ -58,7 +57,6 @@ app.post("/update", async (req, res) => {
 
 app.get("/address", async (req, res) => {
     try {
-        // Fetch the latest address from MongoDB
         const latestAddress = await Address.findOne().sort({ _id: -1 });
 
         if (!latestAddress) {

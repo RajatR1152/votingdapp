@@ -25,7 +25,7 @@ export default function Head() {
     }, [])
 
     function getContractAddress() {
-        axios.get('http://localhost:5000/address').then((res) => {
+        axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/address`).then((res) => {
             setAddress(res.data.address)
         })
     }

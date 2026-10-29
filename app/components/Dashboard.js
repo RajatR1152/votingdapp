@@ -212,7 +212,7 @@ export default function Dashboard() {
             localStorage.setItem("address", newAddress);
             setAddress(newAddress);
 
-            axios.post("http://localhost:5000/update", {
+            axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/update`, {
                 newaddress: newAddress
             })
                 .then((res) => {
@@ -480,10 +480,10 @@ export default function Dashboard() {
                 <div className="mb-5 flex flex-wrap items-center gap-3">
                     <div
                         className={`rounded-lg px-3 py-2 text-sm ${votingEnded
-                                ? "bg-red-500/10 text-red-400"
-                                : votingStarted
-                                    ? "bg-green-500/10 text-green-400"
-                                    : "bg-yellow-500/10 text-yellow-400"
+                            ? "bg-red-500/10 text-red-400"
+                            : votingStarted
+                                ? "bg-green-500/10 text-green-400"
+                                : "bg-yellow-500/10 text-yellow-400"
                             }`}
                     >
                         {votingEnded
