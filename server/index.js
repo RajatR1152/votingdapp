@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.post("/update", async (req, res) => {
     try {
-        const { newaddress } = req.body;
+        const  newaddress  = req.body.newaddress;
 
         if (!newaddress) {
             return res.status(400).json({
@@ -47,6 +47,8 @@ app.post("/update", async (req, res) => {
             message: "Address saved successfully",
             address: savedAddress.addr
         });
+
+
     } catch (error) {
         console.error(error);
         res.status(500).json({

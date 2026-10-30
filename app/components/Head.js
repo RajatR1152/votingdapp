@@ -25,7 +25,8 @@ export default function Head() {
     }, [])
 
     function getContractAddress() {
-        axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/address`).then((res) => {
+        
+        axios.get(`https://votingdappserver-3qcu.onrender.com/address`).then((res) => {
             setAddress(res.data.address)
         })
     }
@@ -173,7 +174,7 @@ export default function Head() {
                         </div>
 
                         <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
-                            Decentralized Voting
+                            Decentralized Voting {address}
                         </h1>
 
                         <p className="mt-1 text-sm text-gray-500">
