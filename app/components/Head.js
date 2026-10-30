@@ -174,7 +174,7 @@ export default function Head() {
                         </div>
 
                         <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
-                            Decentralized Voting {address}
+                            Decentralized Voting 
                         </h1>
 
                         <p className="mt-1 text-sm text-gray-500">

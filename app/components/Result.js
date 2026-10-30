@@ -133,10 +133,7 @@ export default function Result() {
         }
     };
 
-    /*
-     * Load results whenever
-     * contract address changes
-     */
+  
     useEffect(() => {
         if (
             address &&
@@ -277,7 +274,6 @@ export default function Result() {
                         </div>
                     )}
 
-                <h1>address:{address}</h1>
 
                 <button
                     onClick={loadResults}
